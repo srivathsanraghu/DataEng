@@ -1,0 +1,50 @@
+1.
+
+select department,AVG(salary) AS 'averagesalary' from [studentdata].[Employee_Details] 
+where department IN ('Finance', 'IT', 'HR') 
+GROUP BY department HAVING AVG(salary) > 68000 ORDER BY department DESC
+
+2.
+
+select department,AVG(salary) AS 'averagesalary' from [studentdata].[Employee_Details] 
+where city <> 'chennai'
+GROUP BY department HAVING AVG(salary) > 68000 ORDER BY department DESC
+
+3.
+
+select department,AVG(Age) AS 'averageAge' from [studentdata].[Employee_Details] 
+where city <> 'chennai'
+GROUP BY department HAVING AVG(Age) > 21 ORDER BY department DESC
+
+4.
+
+select department,AVG(Age) AS 'averageAge' from [studentdata].[Employee_Details] 
+where city = 'chennai'
+GROUP BY department HAVING AVG(Age) > 21 ORDER BY department DESC
+
+5.
+
+select department, AVG(salary) AS 'averagesalary' from [studentdata].[Employee_Details]
+where Experience>3 GROUP BY department HAVING AVG(salary) > 75000 ORDER BY AVG(salary) DESC
+
+6.
+
+SELECT city, count(*) from [studentdata].[Employee_Details]
+where JoinDate >= '2022-01-01' GROUP BY city HAVING count(*) >=3 ORDER BY count(*) DESC
+
+7.
+
+SELECT Department, SUM(Bonus) from [studentdata].[Employee_Details]
+where age>25 GROUP BY Department HAVING SUM(Bonus)>50000 ORDER BY SUM(Bonus) DESC
+
+8.
+
+SELECT Department, AVG(Experience) AS 'Average Experience' from [studentdata].[Employee_Details]
+where city IN ('chennai', 'bangalore') AND Salary>60000
+GROUP BY Department HAVING AVG(Experience)>5  ORDER BY AVG(Experience) DESC
+
+9.
+
+SELECT Department, count(*) AS 'employee count', AVG(Salary) AS 'Average salary' from [studentdata].[Employee_Details]
+where bonus>10000 AND JoinDate > '2022-01-01' 
+GROUP BY Department HAVING COUNT(*)>3 AND AVG(Salary)>80000 ORDER BY AVG(Salary) DESC
