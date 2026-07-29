@@ -1,0 +1,16 @@
+SELECT e.empName,d.deptName from [dbo].[Employees] e JOIN [dbo].[Departments] d ON e.DeptID = d.DeptID
+ORDER BY e.EmpName
+
+SELECT e.empName,d.DeptName,e.Salary from [dbo].[Employees] e JOIN [dbo].[Departments] d ON e.DeptID = d.DeptID
+where d.[Location]='chennai' AND e.Salary >60000 ORDER BY e.Salary DESC
+
+SELECT e.empName,d.deptName from [dbo].[Employees] e LEFT JOIN [dbo].[Departments] d ON e.DeptID = d.DeptID
+ORDER BY e.EmpName
+
+SELECT e.empName,d.deptName from [dbo].[Employees] e RIGHT JOIN [dbo].[Departments] d ON e.DeptID = d.DeptID
+ORDER BY d.DeptName
+
+SELECT d.deptName,count(e.EmpID) 'EmployeeCount',SUM(e.salary) 'TotalSalary',AVG(e.Salary) 'AverageSalary' 
+from [dbo].[Employees] e JOIN [dbo].[Departments] d ON e.DeptID = d.DeptID
+WHERE e.Salary>50000 GROUP BY d.DeptName HAVING COUNT(e.EmpID)>=2
+ORDER BY SUM(e.salary) DESC
