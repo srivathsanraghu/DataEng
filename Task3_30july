@@ -1,0 +1,23 @@
+select empName,salary from employee
+where salary > (select AVG(salary) from employee)
+
+select empId,empName,deptId,salary from employee 
+where deptID IN 
+(select deptId from department where location='chennai')
+
+with HighSalaryEmployees as (
+select empName, salary from employee where salary>60000
+)
+select * from HighSalaryEmployees
+ORDER BY Salary DESC;
+
+
+with DepartmentSalarySummary as (
+select count(*) 'employee_count', SUM(salary) 'Total_salary',AVG(salary) 'Average_salary',deptID from employee
+GROUP BY deptId
+)
+select deptID from DepartmentSalarySummary
+where Average_salary > 55000
+
+
+select empName,deptId,salary from employee e where salary > (select AVG(salary) from employee e2 where e.deptId=e2.deptId)
