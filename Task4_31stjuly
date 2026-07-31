@@ -1,0 +1,39 @@
+-------1.
+
+select empname,deptId,salary,
+ROW_NUMBER() OVER (partition BY deptId ORDER BY salary DESC) as RowNum 
+from employees
+order by deptId,RowNum
+
+-------2.
+
+with salary_rank as (
+    select *,
+RANK() OVER (partition BY deptId ORDER BY salary desc) as salRank from employees
+)
+select empName,deptId,salary,salRank from salary_rank order by DeptID, salRank
+
+------3.
+
+with salary_rank as (
+    select *,
+DENSE_RANK() OVER (partition BY deptId ORDER BY salary desc) as denseRank from employees
+)
+select empName,deptId,salary,denseRank from salary_rank order by deptId,denseRank
+
+
+------4.
+
+with salary_rank as (
+    select *,
+DENSE_RANK() OVER (partition BY deptId ORDER BY salary desc) as denseRank from employees
+)
+select empName,deptId,salary from salary_rank where denseRank=2 order by salary desc
+
+-------5.
+
+with salary_rank as (
+    select *,
+DENSE_RANK() OVER (partition BY deptId ORDER BY salary desc) as denseRank from employees
+)
+select empName,deptId,salary from salary_rank where denseRank<=3 order by deptId,salary desc
