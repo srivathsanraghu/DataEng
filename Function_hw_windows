@@ -1,0 +1,49 @@
+select * from [studentdata].[Employee_Details]
+select COUNT(Age) from [studentdata].[Employee_Details]
+select SUM(Age) from [studentdata].[Employee_Details]
+select AVG(Age) from [studentdata].[Employee_Details]
+select len(Name) from [studentdata].[Employee_Details]
+select UPPER(Name) from [studentdata].[Employee_Details]
+select LOWER(Name) from [studentdata].[Employee_Details]
+select MAX(salary) from [studentdata].[Employee_Details]
+select MIN(salary) from [studentdata].[Employee_Details]
+select SUBSTRING(Name,2,3) from [studentdata].[Employee_Details]
+SELECT COALESCE(bonus,age,name) from [studentdata].[Employee_Details]
+select ISNULL(bonus,0) from [studentdata].[Employee_Details]
+select TRIM(Name) from [studentdata].[Employee_Details]
+select LEFT(Name,5) from [studentdata].[Employee_Details]
+select RIGHT(Name,5) from [studentdata].[Employee_Details]
+select LEFT(Name,len(name)-5) from [studentdata].[Employee_Details]
+select RIGHT(Name,len(name)-5) from [studentdata].[Employee_Details]
+select SUBSTRING(UPPER(name),1,len(name)+1) from [studentdata].[Employee_Details]
+select CONCAT(SUBSTRING(UPPER(name),1,1), SUBSTRING(LOWER(name),2,len(name)+1)) from [studentdata].[Employee_Details]
+select REPLACE('Manoj','M','m') from [studentdata].[Employee_Details] where name LIKE '%Manoj%'
+select ROUND(bonus,2) from [studentdata].[Employee_Details]
+select CEILING(bonus) from [studentdata].[Employee_Details]
+select FLOOR(bonus) from [studentdata].[Employee_Details]
+select name,GETDATE()  from [studentdata].[Employee_Details]
+select name,YEAR(GETDATE())  from [studentdata].[Employee_Details]
+select name,MONTH(GETDATE())  from [studentdata].[Employee_Details]
+select name,DAY(GETDATE())  from [studentdata].[Employee_Details]
+select DATEDIFF(DAY,GETDATE()-10,GETDATE()) from [studentdata].[Employee_Details]
+select DATEADD(DAY,3,GETDATE()) from [studentdata].[Employee_Details]
+select name,salary,
+ROW_NUMBER() over (order by salary Desc) 'Rownumber'  from [studentdata].[Employee_Details]
+select name,salary,Age,
+RANK() over (order by Age Desc) 'Rank'  from [studentdata].[Employee_Details]
+select name,salary,Age,
+DENSE_RANK() over (order by Age Desc) 'DenseRank'  from [studentdata].[Employee_Details]
+select name,salary,Age,
+LAG(salary) over (order by Age Desc) 'LAG'  from [studentdata].[Employee_Details]
+select name,salary,Age,
+LEAD(salary) over (order by Age Desc) 'Lead'  from [studentdata].[Employee_Details]
+select name,salary,Age,
+ISNULL(LAG(salary) over (order by Age Desc),0) 'LAG' from [studentdata].[Employee_Details]
+select name,salary,Age,
+ISNULL(LEAD(salary) over (order by Age Desc) ,0) 'Lead' from [studentdata].[Employee_Details]
+select name,salary,Age,
+SUM(salary) over (order by name) 'RunTotal' from [studentdata].[Employee_Details]
+
+---the below gives sum of Age
+select name,salary,Age,
+SUM(salary) over (order by Age) 'RunTotal' from [studentdata].[Employee_Details]
