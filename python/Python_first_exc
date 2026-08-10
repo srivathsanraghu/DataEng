@@ -1,0 +1,56 @@
+1.
+
+name = input('Enter Name : ')
+city = input('Enter City : ')
+course = input('Enter cource : ')
+print('Name is:', name, '\nCity is:', city, '\nCourse is:', course)
+
+2.
+
+name = input('Enter the name: ')
+age = int(input('Enter age: '))
+salary = int(input('Enter salary: '))
+active_status = bool(input('Is the employee active?:'))
+print('Name is:', name, ' ', type(name), '\nAge:', age, ' ', type(age), '\nsalary is:', salary, ' ', type(salary),
+      '\nstatus is:', active_status, ' ', type(active_status))
+
+3.
+
+num1 = int(input("Enter first number : "))
+num2 = int(input("Enter second number : "))
+print('The total sum is : ',num1+num2)
+
+4.
+
+Birth_year = int(input("Enter your birth year : "))
+print('The birth year is : ',Birth_year)
+
+(or)
+
+Birth_year = input("Enter your birth year : ")
+print('The birth year is : ',int(Birth_year))
+
+5.
+
+product_name = input('Enter product Name : ')
+quantity = int(input('Enter quantity : '))
+price = float(input('Enter quantity : '))
+print('product Name: ', product_name, '\nquantity: ', quantity, '\nprice: ', price, '\nTotal Amount: ', quantity*price)
+
+6.
+
+x = int(10)
+y = int(20)
+print(x+y)
+
+7.
+
+x=25
+y=99.5
+
+print(float(x))
+print(str(y))
+print(type(str(y)))
+
+8. As per the variable rules, then variable name should not be start with integer
+
