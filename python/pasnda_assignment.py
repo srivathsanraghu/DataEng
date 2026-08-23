@@ -1,11 +1,10 @@
 import pandas as pd
-import numpy as np
 
 df = pd.read_csv(r"/Users/srivathsan/Downloads/Data Eng/Python/day6_messy_employee_data.csv")
-# print(df.head(5))
-# print(df.shape)
-# print(df.isnull().sum())
-# print(df["salary"].isnull().sum())
+print(df.head(5))
+print(df.shape)
+print(df.isnull().sum())
+print(df["salary"].isnull().sum())
 
 df = df.fillna({
     "city" : "Unknown",
@@ -13,12 +12,12 @@ df = df.fillna({
     "dept" : "Not Assigned",
     "salary": df["salary"].mean()
 })
-# print(df)
-# print("no.of duplicate", df.duplicated().sum())
+print(df)
+print("no.of duplicate", df.duplicated().sum())
 
 df = df.drop_duplicates()
 
-# print("no.of new duplicate", df.duplicated().sum())
+print("no.of new duplicate", df.duplicated().sum())
 
 df = df.rename(columns={
     "emp_id" : "employee Id",
@@ -26,7 +25,7 @@ df = df.rename(columns={
     "dept" : "department"
 })
 
-# print(df)
+print(df)
 
 mapping = {
     "IT" : "Information Technology",
@@ -37,12 +36,12 @@ mapping = {
 df["department"] = df["department"].map(mapping)
 
 df["employee name"] = df["employee name"].map(str.upper)
-# print(df)
+print(df)
 
 bonus = lambda salary : salary * 0.10
 
 df["Bonus"] = df["salary"].apply(bonus)
-# print(df)
+print(df)
 
 def salary_category(salary):
     if (salary >= 50000):
@@ -54,16 +53,16 @@ df["salary category"] = df["salary"].apply(salary_category)
 
 
 group = df.groupby("department")["salary"].mean()
-# print(group)
+print(group)
 
 total_sal = df.groupby("department")["salary"].sum()
-# print(total_sal)
+print(total_sal)
 
 aggre = df.groupby("department")["salary"].agg(["min","max","mean"])
-# print(aggre)
+print(aggre)
 
 employeecount = df.groupby("department")["employee Id"].count()
-# print(employeecount)
+print(employeecount)
 
 department_df = pd.DataFrame(
     {
@@ -77,20 +76,18 @@ department_df = pd.DataFrame(
 merged_df = pd.merge(df,department_df,on="department")
 
 
-# print(merged_df[["employee name","department","salary","salary category","manager"]])
+print(merged_df[["employee name","department","salary","salary category","manager"]])
 
 
 
 #Challenge Questions
 #-------------------
 
-# def highAvg(salary):
 highAvg = merged_df.groupby("department")["salary"].mean().idxmax()
-# print(highAvg)
+print(highAvg)
 
 merged_df["salary_after_bonus"] = merged_df["salary"] + (merged_df["salary"] * 0.10)
 
 print(merged_df.groupby("department")["salary"].mean())
 
 print(merged_df.groupby("department")["salary"].agg(["count","min","max","mean"]))
-# print(report)
