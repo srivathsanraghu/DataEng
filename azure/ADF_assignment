@@ -1,0 +1,144 @@
+1. Linked service
+
+Linked service is a connection between ADF and a data source or sink.
+
+2. What is Integration Runtime and its types?
+
+integration runtime provides the required compute power which is used by ADF to perform a activity
+copy a data from source to sink, we need a power source
+
+Auto integration runtime
+self hosted integration runtime
+SSIS
+
+3. When will we use Tumbling Window Trigger?
+
+triggers a fixed pipeline
+no overlapping time windows
+the advantage of tumbling window trigger is we can go backwards, use start and end time and runs based on dependencies.
+
+4. What are the types of triggers?
+
+schedule -> Runs a pipeline based on a schedule timeline
+Tumbling window -> runs a pipeline as fixed. no overlapping time windows
+storage events -> triggers when a new file is added to a storage container or delete
+custom events -> creating a custome events.
+
+5. I have an on-prem file. How do I copy it? Mention Self-hosted IR.
+
+create selfhosted runtime in azure -> download the self hosted integration runtime file in local or onprem
+-> run the setup -> configure the selfhosted runtime -> change the run time from window to sql 
+-> create loggin -> create linked service -> connect the local to azure via selfhosted
+
+
+6. Name the activities that you have used in ADF.
+
+lookup or getmetadata
+if, foreach
+script, stored procedure
+copy data
+web activity
+filter
+set variables
+execute pipeline
+delete 
+data flow
+
+7. Explain each activity and its use. Take any 5 and explain. Please don't take Copy Activity.
+
+lookup or getmetadata -> Used to read or retrieve data from a table. or Used to check whether a file exists or not and retrieve file information.
+condition -> return true or false. used for conditional execution.
+delete -> used to delete a file in a blob.
+script -> used to execute SQL statements such as , create, insert, update or truncate..
+stored procedure -> predefined sql commands used to execute in a database.
+
+8. Lookup vs Get Metadata Activity.
+
+Lookup → Used to read or retrieve data from a table
+Get Metadata → Used to check whether a file exists or not and retrieve file information.
+
+lookup is for table and getmetadata is for file.
+
+
+9. Explain the difference between variables and parameters.
+
+variables -> variable is used to store a value
+parameters -> used to pass a value .
+eg. salary < 100000 where 100000 is passed in parameter.
+
+10. Explain how you will copy 100 tables.
+
+	1. Create a lookup/config table that contains source and destination table details.
+	2. in ADF, create 3 datasets:
+		one for Lookup
+		one for Source
+		one for Sink 
+	3. Create 2 linked services:
+		One for the source
+		One for the sink
+	4.Lookup activity to retrieve the source and destination table details.
+	5.ForEach activity and pass the Lookup activity output value to it.
+	6.Inside the ForEach, create a Copy Activity and pass the source table name and sink table name as parameters using the lookup values.
+
+11. Explain metadata-driven pipeline.
+
+a group of activities acheives with lookup or metadata
+first i will create config table to store the source and sink details. then i will create 2 linked service for source to souce and sink to sink.
+then i will create a dataset for souce, sink and config. then i will create a pipeline
+in pipeline:
+first lookup activity to view the source and sink tables details.
+then for each activity to copy the source data to sink
+
+if the souce is file, we can use get metadata to check the file exist and to retrieve the file information
+
+
+12. How will you run only the failed tables in Copy Activity?
+
+we can log the activities in log table and instead of viewing pipeline run everytime, we can see the error log and execute only failed.
+
+13. How will you monitor your run and how can you automate it?
+
+we have  a monitor tab which contains all the pipeline/trigger runs
+by creating alert, we can automate the monitoring.
+alerts will be with basic information about the error and we can customise it and set as a email notification 
+
+14. What is Data Flow? What are its types?
+
+no or low code transformation which runs on spark engine. 
+since its a spark engine, it is very costly
+
+types:
+mapping DF -> we can create an flow of a data from source to sink
+powerquery -> we can query using the power query. same like excel query
+
+15. Explain the basic activities in Data Flow.
+
+source, filter, select, sort, rank, sink
+
+16. What is full load and incremental load?
+
+full load -> means we have to load the entire data from a tables. so we will truncate the table and load it
+incremental load -> copy only the newly updated datas
+
+17. How will you identify whether a table is suitable for full load or incremental load?
+
+check the table size, if smaller the face is good usecase
+if table size is big, then incremental load is good usecase.
+doesnot have a any column to identify the updating records then full load
+otherwise its incremental.
+
+
+18. What are the rules for incremental load?
+
+load type should be incremental
+need modified date for filtering
+watermark column for indentifying the source table filtering column name
+watermark value contains last modified date, so that if new record come, we can filter with watermark value.
+deltakey is used for identify a record.
+
+19. How will you achieve incremental load?
+with watermark column, we can get the column name of source table which the modified date will be stored.
+with watermark value, we will have the last modified date.
+so if date is watermark column, then  watermark column > watermark value -> it will filter the records which are previously stored and only new record will be retrieve.
+
+
